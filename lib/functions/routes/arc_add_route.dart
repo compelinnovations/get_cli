@@ -23,7 +23,15 @@ void arcAddRoute(String nameRoute) {
     lines = LineSplitter.split(content).toList();
   }
 
-  var line = 'static const ${nameRoute.snakeCase.toLowerCase()} = \'/${nameRoute.snakeCase.toLowerCase().replaceAll('_', '-')}\';';
+  // Convert snake_case to lowerCamelCase for constant name
+  var camelCaseName = ReCase(nameRoute.snakeCase.toLowerCase()).camelCase;
+
+  // Keep snake_case for route path
+  var snakeCaseName = nameRoute.snakeCase.toLowerCase();
+
+  var line = 'static const $camelCaseName = \'/$snakeCaseName\';';
+
+  // var line = 'static const ${nameRoute.snakeCase.toLowerCase()} = \'/${nameRoute.snakeCase.toLowerCase().replaceAll('_', '-')}\';';
   if (lines.contains(line)) {
     return;
   }

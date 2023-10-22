@@ -40,8 +40,12 @@ void addRoute(String nameRoute, String bindingDir, String viewDir) {
   }
   var route = pathSplit.join('/');
 
-  var declareRoute = 'static const ${nameRoute.snakeCase.toLowerCase()} =';
+  // Convert snake_case to lowerCamelCase for constant name
+  var camelCaseName = ReCase(nameRoute.snakeCase.toLowerCase()).camelCase;
+
+  var declareRoute = 'static const $camelCaseName =';
   var line = "$declareRoute '/$route';";
+
   if (supportChildrenRoutes) {
     line = '$declareRoute ${_pathsToRoute(pathSplit)};';
     var linePath = "$declareRoute '/${pathSplit.last}';";
@@ -59,7 +63,9 @@ String _pathsToRoute(List<String> pathSplit) {
   var sb = StringBuffer();
   for (var e in pathSplit) {
     sb.write('_Paths.');
-    sb.write(e.snakeCase.toLowerCase());
+    // Convert snake_case to lowerCamelCase
+    var camelCaseName = ReCase(e.snakeCase.toLowerCase()).camelCase;
+    sb.write(camelCaseName);
     if (e != pathSplit.last) {
       sb.write(' + ');
     }

@@ -106,7 +106,7 @@ class CreatePageCommand extends Command {
     );
     var bindingFile = handleFileCreate(
       name,
-      'binding',
+      'bindings',
       path,
       extraFolder,
       BindingSample(
@@ -117,7 +117,7 @@ class CreatePageCommand extends Command {
         isServer,
         overwrite: overwrite,
       ),
-      'binding',
+      'bindings',
     );
 
     addRoute(

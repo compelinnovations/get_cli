@@ -80,12 +80,13 @@ void addAppPage(String name, String bindingDir, String viewDir) {
   }
   var nameSnakeCase = name.snakeCase;
   var namePascalCase = name.pascalCase;
-  var line = '''${_getTabs(tabEspaces)}GetPage(
-${_getTabs(tabEspaces + 1)}name: $routesOrPath.${nameSnakeCase.toLowerCase()}, 
-${_getTabs(tabEspaces + 1)}page:()=> const ${namePascalCase}View(), 
-${_getTabs(tabEspaces + 1)}binding: ${namePascalCase}Binding(),
-${_getTabs(tabEspaces)}),''';
+  var camelCaseName = ReCase(nameSnakeCase.toLowerCase()).camelCase;
 
+  var line = '''${_getTabs(tabEspaces)}GetPage(
+${_getTabs(tabEspaces + 1)}name: $routesOrPath.$camelCaseName, 
+${_getTabs(tabEspaces + 1)}page:()=> const ${namePascalCase}View(), 
+${_getTabs(tabEspaces + 1)}bindings: ${namePascalCase}Binding(),
+${_getTabs(tabEspaces)}),''';
   var import = "import 'package:${PubspecUtils.projectName}/";
 
   lines.insert(index, line);

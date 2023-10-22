@@ -24,8 +24,7 @@ class SortCommand extends Command {
     } else if (FileSystemEntity.isFileSync(path)) {
       sortImportsFile(path);
     } else {
-      throw CliException(
-          LocaleKeys.error_invalid_file_or_directory.trArgs([path]));
+      throw CliException(LocaleKeys.error_invalid_file_or_directory.trArgs([path]));
     }
   }
 
@@ -43,24 +42,17 @@ class SortCommand extends Command {
   bool validate() {
     super.validate();
     if (args.isEmpty) {
-      throw CliException(LocaleKeys.error_required_path.tr,
-          codeSample: codeSample);
+      throw CliException(LocaleKeys.error_required_path.tr, codeSample: codeSample);
     }
     return true;
   }
 
   void sortImportsDirectory(String path) {
-    Directory(path)
-        .listSync(recursive: true, followLinks: false)
-        .forEach((element) {
+    Directory(path).listSync(recursive: true, followLinks: false).forEach((element) {
       if (element is File && element.path.endsWith('.dart')) {
         writeFile(element.path, element.readAsStringSync(),
-            overwrite: true,
-            logger: false,
-            skipRename: containsArg('--skipRename'),
-            useRelativeImport: containsArg('--relative'));
-        LogService.success(
-            LocaleKeys.sucess_file_formatted.trArgs([element.path]));
+            overwrite: true, logger: false, skipRename: containsArg('--skipRename'), useRelativeImport: containsArg('--relative'));
+        LogService.success(LocaleKeys.success_file_formatted.trArgs([element.path]));
       }
     });
   }
@@ -68,11 +60,8 @@ class SortCommand extends Command {
   void sortImportsFile(String path) {
     if (path.endsWith('.dart') && File(path).existsSync()) {
       writeFile(path, File(path).readAsStringSync(),
-          overwrite: true,
-          logger: false,
-          skipRename: containsArg('--skipRename'),
-          useRelativeImport: containsArg('--relative'));
-      LogService.success(LocaleKeys.sucess_file_formatted.trArgs([path]));
+          overwrite: true, logger: false, skipRename: containsArg('--skipRename'), useRelativeImport: containsArg('--relative'));
+      LogService.success(LocaleKeys.success_file_formatted.trArgs([path]));
     } else {
       throw CliException(LocaleKeys.error_invalid_dart.trArgs([path]));
     }

@@ -28,5 +28,5 @@ Future<void> createInitGetxPattern() async {
   ]);
   createListDirectory(initialDirs);
 
-  LogService.success(Translation(LocaleKeys.sucess_getx_pattern_generated));
+  LogService.success(Translation(LocaleKeys.success_getx_pattern_generated));
 }

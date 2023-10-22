@@ -62,21 +62,20 @@
     "yes": "Sim!",
     "no": "Não!",
     "rename": "Quero renomear!"
-
   },
   "optional_parameters": "Parâmetros opcionais: %s",
   "sucess": {
-    "page_create": "Página %s criada com sucesso.",
-    "locale_generate": "Arquivo de tradução gerado com sucesso.",
-    "getx_pattern_generated": "Estrutura GetX Pattern gerada com sucesso.",
-    "clean_Pattern_generated": "Estrutura CLEAN gerada com sucesso.",
-    "file_formatted": " '%s' foi formatado com sucesso",
+    "page_create": "Página %s criada comsuccesso.",
+    "locale_generate": "Arquivo de tradução gerado comsuccesso.",
+    "getx_pattern_generated": "Estrutura GetX Pattern gerada comsuccesso.",
+    "clean_Pattern_generated": "Estrutura CLEAN gerada comsuccesso.",
+    "file_formatted": " '%s' foi formatado comsuccesso",
     "package_removed": "Pacote: %s removido!",
     "package_installed": "Pacote: %s instalado!",
     "update_cli": "Upgrade concluído",
     "add_controller_in_bindings": "O %s foi adicionado ao binging no path: %s ",
-    "navigation_added": "%s navigation adicionada com sucesso.",
-    "file_created": "Arquivo: %s criado com sucesso no path: %s",
-    "route_created": "Rota %s criada com sucesso."
+    "navigation_added": "%s navigation adicionada comsuccesso.",
+    "file_created": "Arquivo: %s criado comsuccesso no path: %s",
+    "route_created": "Rota %s criada comsuccesso."
   }
 }

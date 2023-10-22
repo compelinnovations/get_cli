@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:dcli/dcli.dart';
 import 'package:recase/recase.dart';
 
@@ -42,8 +41,7 @@ class CreatePageCommand extends Command {
   String? get hint => LocaleKeys.hint_create_page.tr;
 
   void checkForAlreadyExists(String? name) {
-    var newFileModel =
-        Structure.model(name, 'page', true, on: onCommand, folderName: name);
+    var newFileModel = Structure.model(name, 'page', true, on: onCommand, folderName: name);
     var pathSplit = Structure.safeSplitPath(newFileModel.path!);
 
     pathSplit.removeLast();
@@ -56,8 +54,7 @@ class CreatePageCommand extends Command {
           LocaleKeys.options_no.tr,
           LocaleKeys.options_rename.tr,
         ],
-        title:
-            Translation(LocaleKeys.ask_existing_page.trArgs([name])).toString(),
+        title: Translation(LocaleKeys.ask_existing_page.trArgs([name])).toString(),
       );
       final result = menu.choose();
       if (result.index == 0) {
@@ -70,8 +67,9 @@ class CreatePageCommand extends Command {
         checkForAlreadyExists(name.trim().snakeCase);
       }
     } else {
+      name = ReCase(name!.toLowerCase()).snakeCase;
       Directory(path).createSync(recursive: true);
-      _writeFiles(path, name!, overwrite: false);
+      _writeFiles(path, name, overwrite: false);
     }
   }
 
@@ -120,7 +118,7 @@ class CreatePageCommand extends Command {
         isServer,
         overwrite: overwrite,
       ),
-      'bindings',
+      'binding',
     );
 
     addRoute(
@@ -128,7 +126,7 @@ class CreatePageCommand extends Command {
       Structure.pathToDirImport(bindingFile.path),
       Structure.pathToDirImport(viewFile.path),
     );
-    LogService.success(LocaleKeys.sucess_page_create.trArgs([name.pascalCase]));
+    LogService.success(LocaleKeys.success_page_create.trArgs([name.pascalCase]));
   }
 
   @override

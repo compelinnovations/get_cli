@@ -17,8 +17,7 @@ import 'yaml_to.string.dart';
 class PubspecUtils {
   static final _pubspecFile = File('pubspec.yaml');
 
-  static PubSpec get pubSpec =>
-      PubSpec.fromYamlString(_pubspecFile.readAsStringSync());
+  static PubSpec get pubSpec => PubSpec.fromYamlString(_pubspecFile.readAsStringSync());
 
   /// separtor
   static final _mapSep = _PubValue<String>(() {
@@ -56,15 +55,11 @@ class PubspecUtils {
 
   static bool? get extraFolder => _extraFolder.value;
 
-  static Future<bool> addDependencies(String package,
-      {String? version, bool isDev = false, bool runPubGet = true}) async {
+  static Future<bool> addDependencies(String package, {String? version, bool isDev = false, bool runPubGet = true}) async {
     var pubSpec = PubSpec.fromYamlString(_pubspecFile.readAsStringSync());
 
     if (containsPackage(package)) {
-      LogService.info(
-          LocaleKeys.ask_package_already_installed.trArgs([package]),
-          false,
-          false);
+      LogService.info(LocaleKeys.ask_package_already_installed.trArgs([package]), false, false);
       final menu = Menu(
         [
           LocaleKeys.options_yes.tr,
@@ -77,9 +72,7 @@ class PubspecUtils {
       }
     }
 
-    version = version == null || version.isEmpty
-        ? await PubDevApi.getLatestVersionFromPackage(package)
-        : '^$version';
+    version = version == null || version.isEmpty ? await PubDevApi.getLatestVersionFromPackage(package) : '^$version';
     if (version == null) return false;
     if (isDev) {
       pubSpec.devDependencies[package] = HostedReference.fromJson(version);
@@ -89,7 +82,7 @@ class PubspecUtils {
 
     _savePub(pubSpec);
     if (runPubGet) await ShellUtils.pubGet();
-    LogService.success(LocaleKeys.sucess_package_installed.trArgs([package]));
+    LogService.success(LocaleKeys.success_package_installed.trArgs([package]));
     return true;
   }
 
@@ -108,7 +101,7 @@ class PubspecUtils {
       );
       _savePub(newPub);
       if (logger) {
-        LogService.success(LocaleKeys.sucess_package_removed.trArgs([package]));
+        LogService.success(LocaleKeys.success_package_removed.trArgs([package]));
       }
     } else if (logger) {
       LogService.info(LocaleKeys.info_package_not_installed.trArgs([package]));
@@ -120,17 +113,15 @@ class PubspecUtils {
     return dependencies.containsKey(package.trim());
   }
 
-  static bool get nullSafeSupport => !pubSpec.environment!.sdkConstraint!
-      .allowsAny(HostedReference.fromJson('<2.12.0').versionConstraint);
+  static bool get nullSafeSupport => !pubSpec.environment!.sdkConstraint!.allowsAny(HostedReference.fromJson('<2.12.0').versionConstraint);
 
   /// make sure it is a get_server project
   static bool get isServerProject {
     return containsPackage('get_server');
   }
 
-  static String get getPackageImport => !isServerProject
-      ? "import 'package:get/get.dart';"
-      : "import 'package:get_server/get_server.dart';";
+  static String get getPackageImport =>
+      !isServerProject ? "import 'package:get/get.dart';" : "import 'package:get_server/get_server.dart';";
 
   static v.Version? getPackageVersion(String package) {
     if (containsPackage(package)) {
@@ -147,8 +138,7 @@ class PubspecUtils {
         rethrow;
       }
     } else {
-      throw CliException(
-          LocaleKeys.info_package_not_installed.trArgs([package]));
+      throw CliException(LocaleKeys.info_package_not_installed.trArgs([package]));
     }
   }
 

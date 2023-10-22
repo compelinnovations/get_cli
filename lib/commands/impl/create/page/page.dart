@@ -106,7 +106,7 @@ class CreatePageCommand extends Command {
     );
     var bindingFile = handleFileCreate(
       name,
-      'bindings',
+      'binding',
       path,
       extraFolder,
       BindingSample(

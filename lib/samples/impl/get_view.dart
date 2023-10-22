@@ -8,24 +8,20 @@ class GetViewSample extends Sample {
   final String _controller;
   final bool _isServer;
 
-  GetViewSample(String path, this._viewName, this._controller,
-      this._controllerDir, this._isServer,
-      {bool overwrite = false})
+  GetViewSample(String path, this._viewName, this._controller, this._controllerDir, this._isServer, {bool overwrite = false})
       : super(path, overwrite: overwrite);
 
-  String get import => _controllerDir.isNotEmpty
-      ? '''import 'package:${PubspecUtils.projectName}/$_controllerDir';'''
-      : '';
+  String get import => _controllerDir.isNotEmpty ? '''import 'package:${PubspecUtils.projectName}/$_controllerDir';''' : '';
 
-  String get _controllerName =>
-      _controller.isNotEmpty ? 'GetView<$_controller>' : 'GetView';
+  String get _controllerName => _controller.isNotEmpty ? 'GetView<$_controller>' : 'GetView';
 
   String get _flutterView => '''import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
 $import
 
 class $_viewName extends $_controllerName {
- const $_viewName({Key? key}) : super(key: key);
+  const $_viewName({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +40,7 @@ class $_viewName extends $_controllerName {
 }
   ''';
 
-  String get _serverView =>
-      '''import 'package:get_server/get_server.dart'; $import
+  String get _serverView => '''import 'package:get_server/get_server.dart'; $import
 
 class $_viewName extends $_controllerName {
   @override

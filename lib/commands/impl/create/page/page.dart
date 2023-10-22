@@ -67,9 +67,8 @@ class CreatePageCommand extends Command {
         checkForAlreadyExists(name.trim().snakeCase);
       }
     } else {
-      name = ReCase(name!.toLowerCase()).snakeCase;
       Directory(path).createSync(recursive: true);
-      _writeFiles(path, name, overwrite: false);
+      _writeFiles(path, name!, overwrite: false);
     }
   }
 

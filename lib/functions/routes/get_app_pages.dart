@@ -51,7 +51,7 @@ void addAppPage(String name, String bindingDir, String viewDir) {
         onPageEndIndex =
             lines.indexWhere((element) => element.startsWith('${_getTabs(_countTabs(lines[onPageStartIndex]))}),'), onPageStartIndex);
       } else {
-        _logInvalidFormart();
+        _logInvalidFormat();
       }
       if (onPageEndIndex != -1) {
         var indexChildrenStart = lines.sublist(onPageStartIndex, onPageEndIndex).indexWhere((element) => element.contains('children'));
@@ -70,11 +70,11 @@ void addAppPage(String name, String bindingDir, String viewDir) {
             index = indexChildrenEnd;
             tabEspaces = _countTabs(lines[onPageStartIndex]) + 2;
           } else {
-            _logInvalidFormart();
+            _logInvalidFormat();
           }
         }
       } else {
-        _logInvalidFormart();
+        _logInvalidFormat();
       }
     }
   }
@@ -117,7 +117,7 @@ int _countTabs(String line) {
 }
 
 /// log invalid format file
-void _logInvalidFormart() {
+void _logInvalidFormat() {
   LogService.info(
       'the app_pages.dart file does not meet the '
       'expected format, fails to create children pages',

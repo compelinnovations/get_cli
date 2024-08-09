@@ -1,7 +1,7 @@
 import '../../../../common/menu/menu.dart';
 import '../../../../common/utils/logger/log_utils.dart';
 import '../../../../common/utils/pubspec/pubspec_utils.dart';
-import '../../../../common/utils/shell/shel.utils.dart';
+import '../../../../common/utils/shell/shell.utils.dart';
 import '../../../../core/internationalization.dart';
 import '../../../../core/locales.g.dart';
 import '../../../interface/command.dart';
@@ -20,9 +20,7 @@ class InitCommand extends Command {
     ], title: 'Which architecture do you want to use?');
     final result = menu.choose();
 
-    result.index == 0
-        ? await createInitGetxPattern()
-        : await createInitKatekko();
+    result.index == 0 ? await createInitGetxPattern() : await createInitKatekko();
     if (!PubspecUtils.isServerProject) {
       await ShellUtils.pubGet();
     }

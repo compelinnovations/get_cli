@@ -1,8 +1,8 @@
 import 'dart:io';
+import 'package:pubspec_parse/pubspec_parse.dart';
 
-import 'package:pubspec/pubspec.dart';
 import 'package:version/version.dart' as v;
-
+import 'package:pub_semver/pub_semver.dart';
 import '../../../core/internationalization.dart';
 import '../../../core/locales.g.dart';
 import '../../../exception_handler/exceptions/cli_exception.dart';
@@ -10,14 +10,18 @@ import '../../../extensions.dart';
 import '../../menu/menu.dart';
 import '../logger/log_utils.dart';
 import '../pub_dev/pub_dev_api.dart';
-import '../shell/shel.utils.dart';
+import '../shell/shell.utils.dart';
 import 'yaml_to.string.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class PubspecUtils {
-  static final _pubspecFile = File('pubspec.yaml');
+  // static final _pubspecFile = File('pubspec.yaml');
 
-  static PubSpec get pubSpec => PubSpec.fromYamlString(_pubspecFile.readAsStringSync());
+  // static PubSpec get pubSpec => PubSpec.fromYamlString(_pubspecFile.readAsStringSync());
+
+  static final _pubspecFile = File('pubspec.yaml');
+  static final pubSpecString = _pubspecFile.readAsStringSync();
+  static get pubSpec => Pubspec.parse(pubSpecString);
 
   /// separtor
   static final _mapSep = _PubValue<String>(() {
@@ -56,7 +60,7 @@ class PubspecUtils {
   static bool? get extraFolder => _extraFolder.value;
 
   static Future<bool> addDependencies(String package, {String? version, bool isDev = false, bool runPubGet = true}) async {
-    var pubSpec = PubSpec.fromYamlString(_pubspecFile.readAsStringSync());
+    var pubSpec = Pubspec.parse(pubSpecString);
 
     if (containsPackage(package)) {
       LogService.info(LocaleKeys.ask_package_already_installed.trArgs([package]), false, false);
@@ -75,9 +79,9 @@ class PubspecUtils {
     version = version == null || version.isEmpty ? await PubDevApi.getLatestVersionFromPackage(package) : '^$version';
     if (version == null) return false;
     if (isDev) {
-      pubSpec.devDependencies[package] = HostedReference.fromJson(version);
+      pubSpec.devDependencies[package] = HostedDependency(version: VersionConstraint.parse(version));
     } else {
-      pubSpec.dependencies[package] = HostedReference.fromJson(version);
+      pubSpec.dependencies[package] = HostedDependency(version: VersionConstraint.parse(version));
     }
 
     _savePub(pubSpec);
@@ -113,7 +117,8 @@ class PubspecUtils {
     return dependencies.containsKey(package.trim());
   }
 
-  static bool get nullSafeSupport => !pubSpec.environment!.sdkConstraint!.allowsAny(HostedReference.fromJson('<2.12.0').versionConstraint);
+  // static bool get nullSafeSupport => !pubSpec.environment!.sdkConstraint!.allowsAny(HostedReference.fromJson('<2.12.0').versionConstraint);
+  static bool get nullSafeSupport => !pubSpec.environment!.sdkConstraint!.allowsAny(VersionConstraint.parse('<2.12.0'));
 
   /// make sure it is a get_server project
   static bool get isServerProject {
@@ -142,7 +147,7 @@ class PubspecUtils {
     }
   }
 
-  static void _savePub(PubSpec pub) {
+  static void _savePub(dynamic pub) {
     var value = CliYamlToString().toYamlString(pub.toJson());
     _pubspecFile.writeAsStringSync(value);
   }

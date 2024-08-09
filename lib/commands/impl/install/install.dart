@@ -1,6 +1,6 @@
 import '../../../common/utils/logger/log_utils.dart';
 import '../../../common/utils/pubspec/pubspec_utils.dart';
-import '../../../common/utils/shell/shel.utils.dart';
+import '../../../common/utils/shell/shell.utils.dart';
 import '../../../core/internationalization.dart';
 import '../../../core/locales.g.dart';
 import '../../../exception_handler/exceptions/cli_exception.dart';
@@ -20,13 +20,9 @@ class InstallCommand extends Command {
       var packageInfo = element.split(':');
       LogService.info('Installing package "${packageInfo.first}" …');
       if (packageInfo.length == 1) {
-        runPubGet = await PubspecUtils.addDependencies(packageInfo.first,
-                isDev: isDev, runPubGet: false)
-            ? true
-            : runPubGet;
+        runPubGet = await PubspecUtils.addDependencies(packageInfo.first, isDev: isDev, runPubGet: false) ? true : runPubGet;
       } else {
-        runPubGet = await PubspecUtils.addDependencies(packageInfo.first,
-                version: packageInfo[1], isDev: isDev, runPubGet: false)
+        runPubGet = await PubspecUtils.addDependencies(packageInfo.first, version: packageInfo[1], isDev: isDev, runPubGet: false)
             ? true
             : runPubGet;
       }
@@ -43,9 +39,7 @@ class InstallCommand extends Command {
     super.validate();
 
     if (args.isEmpty) {
-      throw CliException(
-          'Please, enter the name of a package you wanna install',
-          codeSample: codeSample);
+      throw CliException('Please, enter the name of a package you wanna install', codeSample: codeSample);
     }
     return true;
   }

@@ -21,14 +21,18 @@ class PubspecUtils {
 
   static final _pubspecFile = File('pubspec.yaml');
   static final pubSpecString = _pubspecFile.readAsStringSync();
-  static get pubSpec => Pubspec.parse(pubSpecString);
+  static Pubspec get pubSpec => Pubspec.parse(pubSpecString);
 
   /// separtor
   static final _mapSep = _PubValue<String>(() {
-    var yaml = pubSpec.unParsedYaml!;
+    var yaml = pubSpec.dependencies;
     if (yaml.containsKey('get_cli')) {
-      if ((yaml['get_cli'] as Map).containsKey('separator')) {
-        return (yaml['get_cli']['separator'] as String?) ?? '';
+      final mapYaml = yaml['get_cli'] as Map;
+      if (mapYaml.containsKey('separator')) {
+        return (mapYaml['separator'] as String?) ?? ''; // Your modified dependencies map
+        // if ((yaml['get_cli'] as Map).containsKey('separator')) {
+        //   return (yaml['get_cli']['separator'] as String?) ?? '';
+        // }
       }
     }
 
@@ -37,17 +41,18 @@ class PubspecUtils {
 
   static String? get separatorFileType => _mapSep.value;
 
-  static final _mapName = _PubValue<String>(() => pubSpec.name?.trim() ?? '');
+  static final _mapName = _PubValue<String>(() => pubSpec.name.trim());
 
   static String? get projectName => _mapName.value;
 
   static final _extraFolder = _PubValue<bool?>(
     () {
       try {
-        var yaml = pubSpec.unParsedYaml!;
+        var yaml = pubSpec.dependencies;
         if (yaml.containsKey('get_cli')) {
-          if ((yaml['get_cli'] as Map).containsKey('sub_folder')) {
-            return (yaml['get_cli']['sub_folder'] as bool?);
+          final mapYaml = yaml['get_cli'] as Map;
+          if (mapYaml.containsKey('sub_folder')) {
+            return (mapYaml['sub_folder'] as bool?);
           }
         }
       } on Exception catch (_) {}
@@ -99,10 +104,24 @@ class PubspecUtils {
 
       dependencies.removeWhere((key, value) => key == package);
       devDependencies.removeWhere((key, value) => key == package);
-      var newPub = pubSpec.copy(
-        devDependencies: devDependencies,
-        dependencies: dependencies,
+      var newPub = Pubspec(
+        pubSpec.name,
+        version: pubSpec.version,
+        description: pubSpec.description,
+        homepage: pubSpec.homepage,
+        repository: pubSpec.repository,
+        issueTracker: pubSpec.issueTracker,
+        documentation: pubSpec.documentation,
+        environment: pubSpec.environment,
+        dependencies: dependencies, // Your modified dependencies map
+        devDependencies: devDependencies, // Your modified devDependencies map
+        dependencyOverrides: pubSpec.dependencyOverrides,
+        flutter: pubSpec.flutter,
       );
+      // var newPub = pubSpec.copy(
+      //   devDependencies: devDependencies,
+      //   dependencies: dependencies,
+      // );
       _savePub(newPub);
       if (logger) {
         LogService.success(LocaleKeys.success_package_removed.trArgs([package]));
@@ -118,7 +137,8 @@ class PubspecUtils {
   }
 
   // static bool get nullSafeSupport => !pubSpec.environment!.sdkConstraint!.allowsAny(HostedReference.fromJson('<2.12.0').versionConstraint);
-  static bool get nullSafeSupport => !pubSpec.environment!.sdkConstraint!.allowsAny(VersionConstraint.parse('<2.12.0'));
+  // static bool get nullSafeSupport => !pubSpec.environment!.sdkConstraint!.allowsAny(VersionConstraint.parse('<2.12.0'));
+  static bool get nullSafeSupport => pubSpec.environment?['sdk']?.allowsAny(VersionConstraint.parse('<2.12.0')) ?? false;
 
   /// make sure it is a get_server project
   static bool get isServerProject {
@@ -128,20 +148,51 @@ class PubspecUtils {
   static String get getPackageImport =>
       !isServerProject ? "import 'package:get/get.dart';" : "import 'package:get_server/get_server.dart';";
 
+  // static v.Version? getPackageVersion(String package) {
+  //   if (containsPackage(package)) {
+  //     var version = pubSpec.dependencies[package]!;
+  //     try {
+  //       final json = version.toJson();
+  //       if (json is String) {
+  //         return v.Version.parse(json);
+  //       }
+  //       return null;
+  //     } on FormatException catch (_) {
+  //       return null;
+  //     } on Exception catch (_) {
+  //       rethrow;
+  //     }
+  //   } else {
+  //     throw CliException(LocaleKeys.info_package_not_installed.trArgs([package]));
+  //   }
+  // }
+
   static v.Version? getPackageVersion(String package) {
     if (containsPackage(package)) {
-      var version = pubSpec.allDependencies[package]!;
-      try {
-        final json = version.toJson();
-        if (json is String) {
-          return v.Version.parse(json);
+      var dependency = pubSpec.dependencies[package];
+
+      if (dependency is HostedDependency) {
+        try {
+          // The version constraint may be a simple string, which we can parse.
+          final versionConstraint = dependency.version;
+          // Check if the version constraint is a simple version (not a range)
+          if (versionConstraint is VersionRange &&
+              versionConstraint.min != null &&
+              versionConstraint.min == versionConstraint.max &&
+              !versionConstraint.includeMax) {
+            return v.Version.parse(versionConstraint.min.toString());
+          }
+        } on FormatException catch (_) {
+          // Handle the case where the version string is not valid semver.
+          return null;
+        } on Exception catch (_) {
+          // Rethrow other exceptions that might occur
+          rethrow;
         }
-        return null;
-      } on FormatException catch (_) {
-        return null;
-      } on Exception catch (_) {
-        rethrow;
       }
+
+      // If the dependency is not a HostedDependency or version extraction fails, return null.
+      return null;
     } else {
       throw CliException(LocaleKeys.info_package_not_installed.trArgs([package]));
     }

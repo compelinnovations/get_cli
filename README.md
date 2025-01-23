@@ -1,13 +1,13 @@
 ###### Documentation languages
 
-| [pt_BR](README-pt_BR.md) | en_US - this file |[zh_CN](README-zh_CN.md) |
-|-------|-------|-------|
+| [pt_BR](README-pt_BR.md) | en_US - this file | [zh_CN](README-zh_CN.md) |
+| ------------------------ | ----------------- | ------------------------ |
 
 Official CLI for the GetX™ framework.
 
 ```dart
 // To install:
-pub global activate get_cli 
+pub global activate get_cli
 // (to use this add the following to system PATH: [FlutterSDKInstallDir]\bin\cache\dart-sdk\bin
 
 flutter pub global activate get_cli
@@ -31,7 +31,7 @@ get create page:home
 // (Screens have controller, view, and binding)
 // Note: you can use any name, ex: `get screen page:login`
 // Nota: use this option if the chosen structure was CLEAN (by Arktekko)
-get create screen:home 
+get create screen:home
 
 // To create a new controller in a specific folder:
 // Note: you don't need to reference the folder,
@@ -185,7 +185,7 @@ class @controller extends GetxController {
 output:
 
 ```dart
-import 'package:get/get.dart';
+import 'package:refreshed/refreshed.dart';
 
 class AuthController extends GetxController {
   final email = ''.obs;
@@ -364,7 +364,7 @@ If you prefer to have a flat file hierarchy, add the following lines to your `pu
 
 ```yml
 get_cli:
-    sub_folder: false
+  sub_folder: false
 ```
 
 ### Are your imports disorganized?

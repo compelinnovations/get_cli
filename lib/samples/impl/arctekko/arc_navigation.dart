@@ -1,13 +1,11 @@
 import '../../interface/sample_interface.dart';
 
 class ArcNavigationSample extends Sample {
-  ArcNavigationSample(
-      {String path = 'lib/infrastructure/navigation/navigation.dart'})
-      : super(path);
+  ArcNavigationSample({String path = 'lib/infrastructure/navigation/navigation.dart'}) : super(path);
 
   @override
   String get content => '''import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:refreshed/refreshed.dart';
 
 import '../../config.dart';
 import '../../presentation/screens.dart';

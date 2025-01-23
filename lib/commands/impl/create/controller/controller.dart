@@ -18,7 +18,7 @@ import '../../../interface/command.dart';
 
 /// This command is a controller with the template:
 ///```
-///import 'package:get/get.dart';,
+///import 'package:refreshed/refreshed.dart';,
 ///
 ///class NameController extends GetxController {
 ///

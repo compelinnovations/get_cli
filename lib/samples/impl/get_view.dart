@@ -18,7 +18,7 @@ class GetViewSample extends Sample {
   String get _controllerPut => _controller.isNotEmpty ? 'Get.put($_controller());' : '';
 
   String get _flutterView => '''import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
+import 'package:refreshed/refreshed.dart';
 $import
 
 class $_viewName extends $_controllerName {

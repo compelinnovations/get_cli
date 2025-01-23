@@ -1,13 +1,13 @@
 ###### 文档支持语言
 
 | [pt_BR](README-pt_BR.md) | [en_US](README.md) | zh_CN - 本文件 |
-|-------|-------|-------|
+| ------------------------ | ------------------ | -------------- |
 
 GetX™ 框架的官方 CLI。
 
 ```dart
 // 安装:
-pub global activate get_cli 
+pub global activate get_cli
 // 使用本命令需要设置系统环境变量: [FlutterSDK安装目录]\bin\cache\dart-sdk\bin 和 [FlutterSDK安装目录]\.pub-cache\bin
 
 flutter pub global activate get_cli
@@ -31,7 +31,7 @@ get create page:home
 // (Screens 有 controller, view, 和 binding)
 // 注: 你可以随便命名，例如: `get screen page:login`
 // 注: 选择了 CLEAN 结构才用这个选项 (by Arktekko)
-get create screen:home 
+get create screen:home
 
 // 在指定文件夹创建新 controller:
 // 注: 你无需引用文件夹, Getx 会自动搜索 home 目录,
@@ -122,7 +122,7 @@ get help
   get create page:name
 ```
 
-这条命令允许你创建模块，建议选择getx_pattern的人使用。
+这条命令允许你创建模块，建议选择 getx_pattern 的人使用。
 
 创建 view, controller 和 binding 文件, 除了自动添加路由。
 
@@ -183,7 +183,7 @@ class @controller extends GetxController {
 输出:
 
 ```dart
-import 'package:get/get.dart';
+import 'package:refreshed/refreshed.dart';
 
 class AuthController extends GetxController {
   final email = ''.obs;
@@ -298,9 +298,9 @@ abstract class Locales {
 
 ### 例：生成 model
 
-创建json model 文件assets/models/user.json
+创建 json model 文件 assets/models/user.json
 
-输入:  
+输入:
 
 ```json
 {
@@ -362,13 +362,13 @@ get_cli:
 
 ```yml
 get_cli:
-    sub_folder: false
+  sub_folder: false
 ```
 
 ### 你的 import 乱不乱?
 
 为了帮你管理你的 import 我加了个新命令: `get sort`, 除了帮你排序整理 import, 这条命令还帮你格式化 dart 文件。感谢 [dart_style](https://pub.dev/packages/dart_style).
- `get sort` 会用 [separator](#separator-file-type) 重命名所有文件。
+`get sort` 会用 [separator](#separator-file-type) 重命名所有文件。
 如果不想重命名文件，使用 `--skipRename` 。
 
 如果你喜欢用相对路径写 import, 使用 `--relative` 选项. get_cli 会自动转换。
@@ -379,8 +379,8 @@ CLI 现在有一套国际化系统。
 
 如果你想把 CLI 翻译成你的语言:
 
-1. 在 [tranlations](/translations) 目录创建一个你语言对应的json文件
-2. 从 [file](/translations/en.json) 复制所有key, 然后翻译成你的语言
+1. 在 [tranlations](/translations) 目录创建一个你语言对应的 json 文件
+2. 从 [file](/translations/en.json) 复制所有 key, 然后翻译成你的语言
 3. 发送你的 PR.
 
 TODO:

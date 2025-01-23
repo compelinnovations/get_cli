@@ -1,38 +1,38 @@
 ###### Idiomas da documentação
 
-| pt_BR - Esse arquivo| [en_EN](README.md) | [zh_CN](README-zh_CN.md) |
-|-------|-------|-------|
+| pt_BR - Esse arquivo | [en_EN](README.md) | [zh_CN](README-zh_CN.md) |
+| -------------------- | ------------------ | ------------------------ |
 
 CLI oficial para a estrutura GetX ™.
 
 ```dart
-// Para instalar, rode esse comando no terminal: 
-pub global activate get_cli 
+// Para instalar, rode esse comando no terminal:
+pub global activate get_cli
 // (para usar adicione a seguinte linha às variáveis do sistema: [FlutterSDKDiretório]\bin\cache\dart-sdk\bin
 
-// ou 
-flutter pub global activate get_cli 
+// ou
+flutter pub global activate get_cli
 
 // Para criar um projeto de flutter no diretório atual:
 // Nota: Por padrão, o nome da pasta será o nome do projeto
 // Você pode nomear o projeto com `get create project: my_project`
 // Se o nome tiver espaços, use `get create project:" my cool project "`
-get create project 
+get create project
 
 // Para gerar uma estrutura em um projeto existente:
-get init 
+get init
 
 // Para criar uma Page:
 // (Pages tem controller, view, and binding)
-// Nota: você pode usar qualquer nome, ex: `get create page:login` 
+// Nota: você pode usar qualquer nome, ex: `get create page:login`
 // Nota: use essa opcão se a estrutura escolhida for Getx_pattern
-get create page:home 
+get create page:home
 
 // Para criar uma Screen:
 // (Screen tem controller, view, and binding)
-// Nota: você pode usar qualquer nome, ex: `get create Screen:login` 
+// Nota: você pode usar qualquer nome, ex: `get create Screen:login`
 // Nota: use essa opcão se a estrutura escolhida for CLEAN (by Arktekko)
-get create screen:home 
+get create screen:home
 
 // Para criar um novo controller em uma pasta específica:
 // Observação: você não precisa fazer referência à pasta,
@@ -46,7 +46,7 @@ get create controller:dialogcontroller on home
 // e inserir sua View lá.
 get create view:dialogview on home
 
-// Para criar um novo Provider em uma pasta específica: 
+// Para criar um novo Provider em uma pasta específica:
 get create provider:user on home
 
 // Para gerar um arquivo de localização:
@@ -91,11 +91,11 @@ get update
 // ou `get upgrade`
 
 // Mostra a versão CLI atual:
-get -v 
+get -v
 // ou `get -version`
 
 // Para obter ajudar
-get help 
+get help
 ```
 
 ## Explorando a CLI
@@ -108,7 +108,7 @@ Bora explorar os comandos existentes na CLI
   get create project
 ```
 
-Usando esse comando parar gerar um novo projeto, você pode escolher entre [Flutter](https://github.com/flutter/flutter) e [get_server](https://pub.dev/packages/get_server), depois de criar o diretório padrão, será executado o comando `get init` 
+Usando esse comando parar gerar um novo projeto, você pode escolher entre [Flutter](https://github.com/flutter/flutter) e [get_server](https://pub.dev/packages/get_server), depois de criar o diretório padrão, será executado o comando `get init`
 
 ### Iniciar
 
@@ -116,7 +116,7 @@ Usando esse comando parar gerar um novo projeto, você pode escolher entre [Flut
   get init
 ```
 
-Use este comando com cuidado, pois ele sobrescreverá todos os arquivos na pasta lib. 
+Use este comando com cuidado, pois ele sobrescreverá todos os arquivos na pasta lib.
 Ele permite que você escolha entre duas estruturas, [getx_pattern](https://kauemurakami.github.io/getx_pattern/) e [clean](https://github.com/Katekko/ekko_app).
 
 ### Criar uma Page
@@ -184,7 +184,7 @@ class @controller extends GetxController {
 output
 
 ```dart
-import 'package:get/get.dart';
+import 'package:refreshed/refreshed.dart';
 
 class AuthController extends GetxController {
   final email = ''.obs;
@@ -208,6 +208,7 @@ Crie os arquivos de idioma json na pasta assets/locales.
 input: <br/>
 
 pt_BR.json
+
 ```json
 {
   "buttons": {
@@ -220,7 +221,9 @@ pt_BR.json
   }
 }
 ```
+
 en_EN.json
+
 ```json
 {
   "buttons": {
@@ -234,13 +237,15 @@ en_EN.json
 }
 ```
 
-Rode no terminal : 
-```dart 
+Rode no terminal :
+
+```dart
 get generate locales assets/locales
 ```
 
-output: 
-```dart 
+output:
+
+```dart
 abstract class AppTranslation {
 
   static Map<String, Map<String, String>> translations = {
@@ -259,7 +264,7 @@ abstract class LocaleKeys {
 }
 
 abstract class Locales {
-  
+
   static const en_EN = {
    'buttons_login': 'Login',
    'buttons_sign_in': 'Sign-in',

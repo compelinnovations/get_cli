@@ -13,7 +13,7 @@ class BindingSample extends Sample {
   BindingSample(String path, this._fileName, this._bindingName, this._controllerDir, this._isServer, {bool overwrite = false})
       : super(path, overwrite: overwrite);
 
-  String get _import => _isServer ? "import 'package:get_server/get_server.dart';" : "import 'package:get/get.dart';";
+  String get _import => _isServer ? "import 'package:get_server/get_server.dart';" : "import 'package:refreshed/refreshed.dart';";
 
   @override
   String get content => '''$_import

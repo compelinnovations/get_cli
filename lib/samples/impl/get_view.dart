@@ -15,18 +15,18 @@ class GetViewSample extends Sample {
 
   String get _controllerName => _controller.isNotEmpty ? 'GetView<$_controller>' : 'GetView';
 
+  String get _controllerPut => _controller.isNotEmpty ? 'Get.put($_controller());' : '';
+
   String get _flutterView => '''import 'package:flutter/material.dart';
 import 'package:get/get.dart'; 
 $import
 
 class $_viewName extends $_controllerName {
   const $_viewName({super.key});
-
-  Get.put($_controller());
   
   @override
   Widget build(BuildContext context) {
-   
+      $_controllerPut
     return Scaffold(
       appBar: AppBar(
         title: const Text('$_viewName'),

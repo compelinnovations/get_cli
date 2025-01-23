@@ -21,9 +21,12 @@ $import
 
 class $_viewName extends $_controllerName {
   const $_viewName({super.key});
+
+  Get.put($_controller());
   
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: AppBar(
         title: const Text('$_viewName'),

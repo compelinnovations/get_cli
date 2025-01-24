@@ -29,5 +29,5 @@ dev_dependencies:
   test: ^1.5.0
 
 executables:
-  get: get
-  getx: get
+  get: refreshed
+  getx: refreshed

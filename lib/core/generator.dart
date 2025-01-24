@@ -21,10 +21,7 @@ class GetCli {
     try {
       final currentArgument = arguments[currentIndex].split(':').first;
 
-      var command = commands.firstWhere(
-          (command) =>
-              command.commandName == currentArgument ||
-              command.alias.contains(currentArgument),
+      var command = commands.firstWhere((command) => command.commandName == currentArgument || command.alias.contains(currentArgument),
           orElse: () => ErrorCommand('command not found'));
       if (command.childrens.isNotEmpty) {
         if (command is CommandParent) {
@@ -80,7 +77,7 @@ class NotFoundComannd extends Command {
   }
 
   @override
-  String get hint => 'Not Found Comannd';
+  String get hint => 'Not Found Command';
 
   @override
   String get codeSample => '';
